@@ -1,5 +1,3 @@
-using System;
-
 namespace PermissionsAttribute.Models
 {
     public class ErrorViewModel
