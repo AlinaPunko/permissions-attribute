@@ -1,4 +1,4 @@
-﻿namespace PermissionsAttribute.Core
+﻿namespace DataAccess.Core
 {
     interface IGenericRepository<TEntity> where TEntity : class
     {

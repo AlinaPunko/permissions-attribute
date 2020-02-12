@@ -1,4 +1,4 @@
-namespace PermissionsAttribute.Models
+namespace DataAccess.Models
 {
     public class ErrorViewModel
     {

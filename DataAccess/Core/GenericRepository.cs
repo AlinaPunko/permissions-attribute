@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace PermissionsAttribute.Core
+namespace DataAccess.Core
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {

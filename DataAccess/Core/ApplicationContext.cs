@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DataAccess.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PermissionsAttribute.Models;
 
-namespace PermissionsAttribute.Core
+namespace DataAccess.Core
 {
     public sealed class ApplicationContext : IdentityDbContext<IdentityUser>
     {

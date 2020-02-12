@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using DataAccess.Core;
+using DataAccess.DataAccessLayer;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using PermissionsAttribute.Attributes;
 using PermissionsAttribute.Constants;
-using PermissionsAttribute.Core;
-using PermissionsAttribute.DataAccessLayer;
-using PermissionsAttribute.Models;
 
 namespace PermissionsAttribute.Controllers
 {
@@ -16,6 +16,7 @@ namespace PermissionsAttribute.Controllers
             repository = new ProfileRepository(context);
         }
 
+
         [HttpGet]
         [HasPermission(Permissions.GetProfiles)]
         public IEnumerable<Profile> Get()
@@ -26,7 +27,7 @@ namespace PermissionsAttribute.Controllers
         [HttpGet]
         [Route("[controller]/[action]/{id}")]
         [HasPermission(Permissions.GetProfileById)]
-        public Profile GetById(int id)
+        public Profile Get(int id)
         {
             return repository.GetById(id);
         }

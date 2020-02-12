@@ -1,5 +1,5 @@
-﻿namespace PermissionsAttribute.Models
-{
+﻿namespace DataAccess.Models
+{ 
     public class Profile
     {
         public int Id { get; set; }

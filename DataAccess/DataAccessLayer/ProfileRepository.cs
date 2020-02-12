@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DataAccess.Core;
+using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
-using PermissionsAttribute.Core;
-using PermissionsAttribute.Models;
 
-namespace PermissionsAttribute.DataAccessLayer
+namespace DataAccess.DataAccessLayer
 {
     public class ProfileRepository : GenericRepository<Profile>
     {

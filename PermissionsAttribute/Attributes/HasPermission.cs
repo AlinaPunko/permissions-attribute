@@ -1,16 +1,15 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using PermissionsAttribute.Constants;
 
 namespace PermissionsAttribute.Attributes
 {
-    public class HasPermissionAttribute : ActionFilterAttribute
+    public class HasPermission: ActionFilterAttribute
     {
         private Permissions Permission { get; }
 
-        public HasPermissionAttribute(Permissions permission)
+        public HasPermission(Permissions permission)
         {
             Permission = permission;
         }
@@ -20,7 +19,7 @@ namespace PermissionsAttribute.Attributes
             bool hasClaim = context.HttpContext.User.Claims.Any(c => c.Type == "permission" && c.Value == Permission.ToString());
             if (!hasClaim)
             {
-                context.Result = new ForbidResult();
+                context.Result = new UnauthorizedObjectResult(null);
             }
         }
     }
