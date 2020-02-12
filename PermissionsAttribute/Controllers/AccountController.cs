@@ -3,8 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using PermissionsAttribute.Models;
+using PermissionsAttribute.Constants;
 using PermissionsAttribute.ViewModels;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 

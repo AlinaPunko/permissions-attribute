@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PermissionsAttribute.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using PermissionsAttribute.Constants;
 
 namespace PermissionsAttribute.Helpers
 {

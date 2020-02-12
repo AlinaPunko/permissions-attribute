@@ -16,7 +16,7 @@ namespace PermissionsAttribute.Controllers
         [HttpGet]
         public IEnumerable<Profile> Get()
         {
-            return repository.Get();
+            return repository.GetAll();
         }
 
         [HttpGet]

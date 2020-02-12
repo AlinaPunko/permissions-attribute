@@ -1,6 +1,6 @@
-﻿namespace PermissionsAttribute.DataAccessLayer
+﻿namespace PermissionsAttribute.Core
 {
-    interface IRepository<TEntity> where TEntity : class
+    interface IGenericRepository<TEntity> where TEntity : class
     {
         void Add(TEntity item);
         TEntity GetById(int id);

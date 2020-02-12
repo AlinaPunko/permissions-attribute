@@ -1,8 +1,11 @@
-﻿public enum Permissions
+﻿namespace PermissionsAttribute.Constants
 {
-    GetProfileById = 1,
-    GetProfiles = 2,
-    AddProfile = 3,
-    UpdateProfile = 4,
-    DeleteProfile = 5
+    public enum Permissions
+    {
+        GetProfileById = 1,
+        GetProfiles = 2,
+        AddProfile = 3,
+        UpdateProfile = 4,
+        DeleteProfile = 5
+    }
 }
