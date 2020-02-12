@@ -10,7 +10,10 @@ namespace PermissionsAttribute.Core
         public DbSet<Profile> Profiles { get; set; }
         public ApplicationContext(DbContextOptions options) : base(options)
         {
-            Database.EnsureCreated();
+            if (!Database.CanConnect())
+            {
+                Database.Migrate();
+            }
         }
     }
 }
