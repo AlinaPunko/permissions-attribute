@@ -1,17 +1,21 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using PermissionsAttribute.Models;
 using PermissionsAttribute.ViewModels;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace PermissionsAttribute.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -29,11 +33,16 @@ namespace PermissionsAttribute.Controllers
                 return View(model);
             }
 
-            User user = new User { Email = model.Email, UserName = model.Email, Year = model.Year};
+            IdentityUser user = new IdentityUser { Email = model.Email, UserName = model.Email};
             IdentityResult result = await userManager.CreateAsync(user, model.Password);
+            Random rnd = new Random();
+            int permissionNumber = rnd.Next(1, 6);
+            Enum.TryParse(permissionNumber.ToString(), out Permissions permission);
+            Claim claim = new Claim("permission", permission.ToString());
             if (result.Succeeded)
             {
                 await signInManager.SignInAsync(user, false);
+                await userManager.AddClaimAsync(user, claim);
                 return RedirectToAction("Index", "Home");
             }
 
@@ -54,26 +63,23 @@ namespace PermissionsAttribute.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
-                {
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-                }
+                return View(model);
             }
+
+            SignInResult result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+            if (result.Succeeded)
+            {
+                if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                {
+                    return Redirect(model.ReturnUrl);
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            ModelState.AddModelError("", "Неправильный логин и (или) пароль");
             return View(model);
         }
 
@@ -81,7 +87,6 @@ namespace PermissionsAttribute.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            // удаляем аутентификационные куки
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }

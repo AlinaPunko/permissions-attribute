@@ -1,12 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PermissionsAttribute.Models;
 
 namespace PermissionsAttribute.DataAccessLayer
 {
     public class ProfileRepository : IRepository<Profile>
     {
-        private List<Profile> Profiles { get; }
+        private DbSet<Profile> Profiles { get; }
+
+        public ProfileRepository(DbContext context)
+        {
+            Profiles = context.Set<Profile>();
+        }
+
         public void Add(Profile item)
         {
             Profiles.Add(item);
